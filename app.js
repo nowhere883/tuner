@@ -259,7 +259,24 @@
   });
 
   // 基准音
-  $('settingsBtn').onclick = () => $('settingsDialog').showModal();
+  $('settingsBtn').onclick = () => {
+    // 屏幕尺寸读数，排查主屏幕模式下的显示问题用
+    const probe = document.createElement('div');
+    probe.style.cssText = 'position:fixed;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);visibility:hidden';
+    document.body.appendChild(probe);
+    const cs = getComputedStyle(probe);
+    const vv = window.visualViewport;
+    $('diag').textContent = [
+      navigator.standalone ? '主屏幕' : '浏览器',
+      '屏幕 ' + screen.width + '×' + screen.height,
+      '窗口 ' + window.innerWidth + '×' + window.innerHeight,
+      '可视 ' + (vv ? Math.round(vv.height) : '-'),
+      '安全区 ' + parseInt(cs.paddingTop) + '/' + parseInt(cs.paddingBottom),
+      '界面 ' + Math.round(app.getBoundingClientRect().height),
+    ].join(' · ');
+    probe.remove();
+    $('settingsDialog').showModal();
+  };
   const setA4 = (v) => { state.a4 = Math.min(450, Math.max(430, v)); save(); $('a4Value').textContent = state.a4; };
   $('a4Minus').onclick = () => setA4(state.a4 - 1);
   $('a4Plus').onclick = () => setA4(state.a4 + 1);
@@ -457,16 +474,7 @@
   }
 
   // ---------- 启动 ----------
-  // 从主屏幕打开时，iOS 有时会把页面高度算短，底部空出一截；直接按屏幕高度铺满
-  if (navigator.standalone) {
-    const fit = () => {
-      const h = Math.max(window.innerHeight, screen.height);
-      app.style.height = h + 'px';
-      app.style.bottom = 'auto';
-    };
-    fit();
-    window.addEventListener('resize', fit);
-  }
+  if (navigator.standalone) document.documentElement.classList.add('standalone');
   render();
   showIdle();
   window.addEventListener('resize', () => moveBubble(0));
