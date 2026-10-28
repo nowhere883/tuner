@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <title>调音器</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="调音器">
+  <meta name="theme-color" content="#0b0d10">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <button class="icon-btn" id="settingsBtn" aria-label="设置">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.6 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>
+      </button>
+      <button class="preset-btn" id="presetBtn" aria-haspopup="dialog">
+        <span id="presetName">标准调弦</span><span class="chev" aria-hidden="true">▾</span>
+      </button>
+      <button class="auto-btn" id="autoBtn" aria-pressed="true">
+        <span class="dot" aria-hidden="true"></span>自动
+      </button>
+    </header>
+
+    <section class="strip" id="strip" aria-live="polite">
+      <span class="flat" aria-hidden="true">♭</span>
+      <span class="sharp" aria-hidden="true">♯</span>
+      <div class="center-mark" aria-hidden="true"></div>
+      <div class="bubble" id="bubble" aria-hidden="true">
+        <div class="ball"><span id="bubbleNote">E</span><sub id="bubbleOct"></sub></div>
+        <div class="tail"></div>
+      </div>
+      <button class="start" id="startBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+        <span>点这里开始调音</span>
+      </button>
+    </section>
+
+    <div class="readout">
+      <div class="status" id="status">需要用到麦克风</div>
+      <div class="freq" id="freq">&nbsp;</div>
+    </div>
+
+    <section class="stage" aria-label="琴弦">
+      <div class="stage-inner" id="stageInner">
+        <svg id="headstock" viewBox="0 0 400 560" aria-hidden="true"></svg>
+        <div id="stringBtns"></div>
+      </div>
+    </section>
+
+    <nav class="tabs" role="tablist" aria-label="乐器">
+      <button role="tab" data-inst="guitar" aria-selected="true">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M27 3l2 2-7.5 7.5M21.5 10.5l-3 3"/><path d="M18.5 13.5c-1.5-1.5-4-1.2-5 .6-.7 1.2-2 1.4-3.3 1.4-2.6 0-5.2 2.4-5.2 5.8 0 4 3.2 6.7 6.6 6.7 3.4 0 5.8-2.6 5.8-5.2 0-1.3.2-2.6 1.4-3.3 1.8-1 2.1-3.5.6-5Z"/><circle cx="11.5" cy="20.5" r="1.8"/></svg>
+        <span>吉他</span>
+      </button>
+      <button role="tab" data-inst="ukulele" aria-selected="false">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M26 4l2 2-7 7M20 11l-2.5 2.5"/><path d="M17.5 13.5c-1.3-1.3-3.4-1-4.3.5-.5.8-1.4 1-2.3 1-2.4 0-4.4 2-4.4 4.8 0 3.2 2.6 5.4 5.4 5.4 2.8 0 4.8-2 4.8-4.4 0-.9.2-1.8 1-2.3 1.5-.9 1.8-3 .5-4.3Z"/><circle cx="11.8" cy="20.2" r="1.5"/></svg>
+        <span>尤克里里</span>
+      </button>
+    </nav>
+  </main>
+
+  <dialog id="presetDialog" aria-label="选择调弦">
+    <div class="sheet">
+      <div class="sheet-head">
+        <h2>选择调弦</h2>
+        <button class="close" data-close aria-label="关闭">×</button>
+      </div>
+      <ul class="preset-list" id="presetList"></ul>
+    </div>
+  </dialog>
+
+  <dialog id="settingsDialog" aria-label="设置">
+    <div class="sheet">
+      <div class="sheet-head">
+        <h2>基准音</h2>
+        <button class="close" data-close aria-label="关闭">×</button>
+      </div>
+      <p class="hint">一般保持 440 Hz。和别的乐器合奏时，按对方的音高改。</p>
+      <div class="stepper">
+        <button id="a4Minus" aria-label="降低 1 Hz">−</button>
+        <output id="a4Value">440</output>
+        <button id="a4Plus" aria-label="升高 1 Hz">+</button>
+      </div>
+      <button class="link" id="a4Reset">恢复 440 Hz</button>
+      <p class="hint">用法：自动模式下直接弹弦，会自动认出是哪根。点左右两边的弦按钮会播放这根弦的标准音，并切到手动模式只调这一根。</p>
+    </div>
+  </dialog>
+
+  <script src="pitch.js"></script>
+  <script src="tunings.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
