@@ -18,9 +18,10 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 button:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
 
 .app {
-  position: relative;
+  /* 用 fixed 铺满整屏：iOS 主屏幕全屏打开时 100dvh 会少算刘海和底部横条的高度 */
+  position: fixed; inset: 0;
   display: flex; flex-direction: column;
-  height: 100dvh; max-width: 480px; margin: 0 auto;
+  max-width: 480px; margin: 0 auto;
   padding-top: env(safe-area-inset-top);
   /* 舞台灯光：琴头后面一圈暖光，四周压暗 */
   background:

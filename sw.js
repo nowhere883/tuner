@@ -1,5 +1,5 @@
 // 离线缓存：装到主屏幕后没网也能打开
-const CACHE = 'tuner-v2';
+const CACHE = 'tuner-v3';
 const FILES = ['./', 'index.html', 'style.css', 'app.js', 'pitch.js', 'tunings.js', 'manifest.webmanifest', 'icon-180.png', 'icon-512.png'];
 
 self.addEventListener('install', (e) => {

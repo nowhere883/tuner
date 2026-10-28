@@ -457,6 +457,16 @@
   }
 
   // ---------- 启动 ----------
+  // 从主屏幕打开时，iOS 有时会把页面高度算短，底部空出一截；直接按屏幕高度铺满
+  if (navigator.standalone) {
+    const fit = () => {
+      const h = Math.max(window.innerHeight, screen.height);
+      app.style.height = h + 'px';
+      app.style.bottom = 'auto';
+    };
+    fit();
+    window.addEventListener('resize', fit);
+  }
   render();
   showIdle();
   window.addEventListener('resize', () => moveBubble(0));
